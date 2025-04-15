@@ -40,3 +40,6 @@ yarn-error.log*
 
 # MacOS files
 .DS_Store
+
+# Uploads
+/uploads
