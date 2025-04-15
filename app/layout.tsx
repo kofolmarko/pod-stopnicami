@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   title: "pod-stopnicami | Transforming School Spaces",
   description:
     "We help elementary schools reduce violence through thoughtful, affordable redesigns of physical spaces and modern technology integration.",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
