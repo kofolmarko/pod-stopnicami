@@ -15,7 +15,7 @@ export async function enhanceClassroom(file: File): Promise<{
 
     // Prepare the content parts
     const contents = [
-        { text: "Enhance this classroom. Keep layout, add calming colors, plants, and modern furniture. Generate new image." },
+        { text: "Add to my image what is missing: A long, well-lit school hallway with sleek light-colored wooden flooring and warm-toned wooden ceiling panels extends forward, featuring floor-to-ceiling glass walls on both sides revealing classrooms. Deep green and muted blue cushioned wall panels line the hallway at regular intervals, while padded impact columns are embedded into the walls between them. Some sections of the walls incorporate built-in rebound pads with subtle give when pushed. Throughout the space, wooden and upholstered benches in curved and geometric shapes are positioned along the walls, with some benches incorporating climbing holds and interactive elements. Recessed lighting fixtures in the ceiling create soft, even illumination across the space. Small, unobtrusive acoustic panels are integrated into the walls at regular intervals. Large windows at the end of the hallway provide natural light that complements the interior lighting. Wide-angle architectural photography with natural and artificial lighting highlighting interior details and materials. try to keep as much as you can from the original image (like layout), just add things from the prompt to add to it." },
         {
             inlineData: {
                 mimeType: file.type,
