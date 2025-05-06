@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 import Image from "next/image"
 
@@ -9,25 +8,25 @@ const testimonials = [
   {
     id: 1,
     name: "Maja Novak",
-    role: "Principal, Ljubljana Elementary",
+    role: "Ravnateljica, OŠ Bežigrad",
     quote:
-      "The transformation of our hallways has led to a 52% decrease in student conflicts. The pod-stopnicami team understood our needs perfectly and delivered solutions that were both beautiful and functional.",
+      "Ko so se hodniki preoblikovali, so se preoblikovali tudi odnosi. Učenci se umirijo že ob vstopu v šolo.",
     image: "/placeholder.svg?height=80&width=80",
   },
   {
     id: 2,
     name: "Luka Kovač",
-    role: "Administrator, Maribor School District",
+    role: "Svetovalec, Šolski center Maribor",
     quote:
-      "We've implemented pod-stopnicami's designs in three of our schools, and the results have been remarkable. Teachers report calmer transitions between classes and more focused students.",
+      "Nismo pričakovali, da lahko prostor tako močno vpliva na dinamiko med učenci. Rešitve so smiselne in preproste.",
     image: "/placeholder.svg?height=80&width=80",
   },
   {
     id: 3,
     name: "Ana Horvat",
-    role: "Vice Principal, Coastal Elementary",
+    role: "Pomočnica ravnatelja, OŠ Koper",
     quote:
-      "What impressed me most was how they integrated technology so seamlessly into the physical redesign. The smart lighting system has been particularly effective in our previously problematic areas.",
+      "Najbolj nas je navdušila vpeljava tehnologije v garderobne prostore – zdaj je manj zadrževanja, več reda.",
     image: "/placeholder.svg?height=80&width=80",
   },
 ]
@@ -35,19 +34,11 @@ const testimonials = [
 export default function TestimonialCarousel() {
   const [current, setCurrent] = useState(0)
 
-  const next = () => {
-    setCurrent((current + 1) % testimonials.length)
-  }
-
-  const prev = () => {
-    setCurrent((current - 1 + testimonials.length) % testimonials.length)
-  }
+  const next = () => setCurrent((current + 1) % testimonials.length)
+  const prev = () => setCurrent((current - 1 + testimonials.length) % testimonials.length)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      next()
-    }, 8000)
-
+    const interval = setInterval(() => next(), 8000)
     return () => clearInterval(interval)
   }, [current])
 
@@ -60,54 +51,56 @@ export default function TestimonialCarousel() {
         >
           {testimonials.map((testimonial) => (
             <div key={testimonial.id} className="w-full flex-shrink-0 px-4">
-              <Card className="border-none shadow-lg bg-slate-50">
-                <CardContent className="p-8">
-                  <div className="flex items-start mb-6">
-                    <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
-                      <Image
-                        src={testimonial.image || "/placeholder.svg"}
-                        alt={testimonial.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-medium text-slate-900">{testimonial.name}</h3>
-                      <p className="text-slate-600">{testimonial.role}</p>
-                    </div>
-                    <Quote className="ml-auto h-8 w-8 text-blue-200" />
+              <div className="rounded-2xl bg-neutral-900 border border-white/10 p-8 shadow-lg transition duration-300">
+                <div className="flex items-start mb-6">
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4 border border-white/10">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <p className="text-slate-700 italic">{testimonial.quote}</p>
-                </CardContent>
-              </Card>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{testimonial.name}</h3>
+                    <p className="text-neutral-400">{testimonial.role}</p>
+                  </div>
+                  <Quote className="ml-auto h-8 w-8 text-blue-500 opacity-40" />
+                </div>
+                <p className="text-neutral-200 italic text-lg leading-relaxed">{testimonial.quote}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
+      {/* Arrows */}
       <button
         onClick={prev}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-slate-50 transition-colors"
-        aria-label="Previous testimonial"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full w-10 h-10 bg-white/10 border border-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+        aria-label="Prejšnje mnenje"
       >
-        <ChevronLeft className="h-6 w-6 text-slate-700" />
+        <ChevronLeft className="h-6 w-6 text-white" />
       </button>
 
       <button
         onClick={next}
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-slate-50 transition-colors"
-        aria-label="Next testimonial"
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full w-10 h-10 bg-white/10 border border-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+        aria-label="Naslednje mnenje"
       >
-        <ChevronRight className="h-6 w-6 text-slate-700" />
+        <ChevronRight className="h-6 w-6 text-white" />
       </button>
 
+      {/* Dots */}
       <div className="flex justify-center mt-6 space-x-2">
         {testimonials.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`w-2.5 h-2.5 rounded-full ${index === current ? "bg-blue-800" : "bg-slate-300"}`}
-            aria-label={`Go to testimonial ${index + 1}`}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              index === current ? "bg-blue-500" : "bg-neutral-600"
+            }`}
+            aria-label={`Pojdi na mnenje ${index + 1}`}
           />
         ))}
       </div>
