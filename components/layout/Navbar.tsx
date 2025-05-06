@@ -1,31 +1,92 @@
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
+"use client";
+import {
+  Navbar,
+  NavBody,
+  NavItems,
+  MobileNav,
+  NavbarLogo,
+  NavbarButton,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu,
+} from "@/components/ui/resizable-navbar";
+import { useState } from "react";
 
-export default function Navbar() {
-    return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-            <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-                <div className="flex items-center">
-                    <Image
-                        src="/images/pod-stopnicami-logo.png"
-                        alt="pod-stopnicami Logo"
-                        width={40}
-                        height={40}
-                        className="mr-2"
-                    />
-                    <span className="text-lg font-medium text-slate-900">pod-stopnicami</span>
-                </div>
-                <div className="hidden md:flex space-x-6 text-sm font-medium">
-                    <a href="#about" className="text-slate-700 hover:text-blue-800 transition-colors">About</a>
-                    <a href="#process" className="text-slate-700 hover:text-blue-800 transition-colors">Process</a>
-                    <a href="#pricing" className="text-slate-700 hover:text-blue-800 transition-colors">Pricing</a>
-                    <a href="#results" className="text-slate-700 hover:text-blue-800 transition-colors">Results</a>
-                    <a href="#contact" className="text-slate-700 hover:text-blue-800 transition-colors">Contact</a>
-                </div>
-                <Button className="bg-blue-800 hover:bg-blue-900 text-white">
-                    Get Started
-                </Button>
+export function NavigationMenu() {
+  const navItems = [
+    {
+      name: "Rešitev",
+      link: "#solution",
+    },
+    {
+      name: "Partnerski program",
+      link: "#partners",
+    },
+    {
+      name: "Cenik",
+      link: "#pricing",
+    },
+  ];
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  return (
+    <div className="relative w-full">
+      <Navbar>
+        {/* Desktop Navigation */}
+        <NavBody>
+          <NavbarLogo />
+          <NavItems items={navItems} />
+          <div className="flex items-center gap-4">
+            <NavbarButton variant="secondary">O nas</NavbarButton>
+            <NavbarButton variant="primary">Stopi v stik</NavbarButton>
+          </div>
+        </NavBody>
+
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </MobileNavHeader>
+
+          <MobileNavMenu
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          >
+            {navItems.map((item, idx) => (
+              <a
+                key={`mobile-link-${idx}`}
+                href={item.link}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="relative text-neutral-600 dark:text-neutral-300"
+              >
+                <span className="block">{item.name}</span>
+              </a>
+            ))}
+            <div className="flex w-full flex-col gap-4">
+              <NavbarButton
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant="primary"
+                className="w-full"
+              >
+                O nas
+              </NavbarButton>
+              <NavbarButton
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant="primary"
+                className="w-full"
+              >
+                Stopi v stik
+              </NavbarButton>
             </div>
-        </nav>
-    )
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
+      {/* Navbar */}
+    </div>
+  );
 }
