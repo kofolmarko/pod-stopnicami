@@ -49,7 +49,7 @@ export const MaskContainer = ({
       }}
     >
       <motion.div
-        className="absolute flex h-full w-full items-center justify-center text-6xl bg-white"
+        className="absolute flex h-full w-full items-center justify-center text-4xl bg-white sm:text-5xl md:text-6xl"
         style={{
           maskImage: "url(/mask.svg)",
           maskRepeat: "no-repeat",
@@ -81,7 +81,7 @@ export const MaskContainer = ({
           onMouseLeave={() => {
             setIsHovered(false);
           }}
-          className="relative z-20 mx-auto max-w-4xl text-center text-4xl font-bold"
+          className="relative z-20 mx-auto max-w-4xl text-center text-2xl font-bold sm:text-3xl md:text-4xl"
         >
           {children}
         </div>

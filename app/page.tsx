@@ -12,17 +12,19 @@ import { ViolenceSolutionProcess } from "@/components/sections/ViolenceSolutionP
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex min-h-screen flex-col items-center justify-center overflow-x-hidden">
       <NavigationMenu />
-      <HeroSection />
-      <ProblemSection />
-      <ImpactStatement />
-      <TestimonialsSection />
-      <ViolenceSolutionProcess />
-      {/* <UploadPreviewSection /> */}
-      <PricingSection />
-      <ResultsSection />
-      <ContactSection />
+      <div className="w-full">
+        <HeroSection />
+        <ProblemSection />
+        <ImpactStatement />
+        <TestimonialsSection />
+        <ViolenceSolutionProcess />
+        {/* <UploadPreviewSection /> */}
+        <PricingSection />
+        <ResultsSection />
+        <ContactSection />
+      </div>
     </main>
   )
 }

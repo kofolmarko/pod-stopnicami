@@ -19,14 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <body className={inter.className}>
+      <body className={`${inter.className} min-h-screen w-full overflow-x-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          {children}
+          <div className="flex flex-col min-h-screen">
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
   )
 }
-
 
 import './globals.css'

@@ -1,9 +1,48 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Building, Mail, Phone } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Building, Loader2, Mail, Phone } from "lucide-react";
+import emailjs from "@emailjs/browser";
 
 export default function ContactSection() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [isSent, setIsSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as string,
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string
+      );
+      setIsSent(true);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      alert("Napaka pri pošiljanju sporočila.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-20 bg-black text-white">
       <div className="container mx-auto px-4">
@@ -43,7 +82,7 @@ export default function ContactSection() {
           </div>
 
           {/* Contact Form */}
-          <form className="bg-neutral-900 p-8 rounded-xl border border-white/10 shadow-md">
+          <form onSubmit={handleSubmit} className="bg-neutral-900 p-8 rounded-xl border border-white/10 shadow-md">
             <div className="mb-6">
               <label htmlFor="name" className="block text-sm font-medium text-neutral-300 mb-2">
                 Ime in priimek
@@ -51,9 +90,12 @@ export default function ContactSection() {
               <input
                 type="text"
                 id="name"
+                value={formData.name}
+                onChange={handleChange}
                 placeholder="Vaše ime"
                 required
                 className="w-full bg-black border border-neutral-700 rounded-lg px-4 py-2 text-white placeholder-neutral-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-700 transition"
+                disabled={isSubmitting}
               />
             </div>
 
@@ -64,9 +106,12 @@ export default function ContactSection() {
               <input
                 type="email"
                 id="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="vas@email.si"
                 required
                 className="w-full bg-black border border-neutral-700 rounded-lg px-4 py-2 text-white placeholder-neutral-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-700 transition"
+                disabled={isSubmitting}
               />
             </div>
 
@@ -76,19 +121,39 @@ export default function ContactSection() {
               </label>
               <textarea
                 id="message"
+                value={formData.message}
+                onChange={handleChange}
                 rows={4}
                 placeholder="Kako vam lahko pomagamo?"
                 required
                 className="w-full bg-black border border-neutral-700 rounded-lg px-4 py-2 text-white placeholder-neutral-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-700 transition"
+                disabled={isSubmitting}
               ></textarea>
             </div>
 
-            <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white transition">
-              Pošlji sporočilo
+            <Button 
+              type="submit" 
+              className="w-full bg-blue-700 hover:bg-blue-800 text-white transition"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
+                  Pošiljanje...
+                </>
+              ) : (
+                "Pošlji sporočilo"
+              )}
             </Button>
+
+            {isSent && (
+              <p className="mt-4 text-sm text-green-500">
+                Sporočilo je bilo uspešno poslano!
+              </p>
+            )}
           </form>
         </div>
       </div>
     </section>
-  )
+  );
 }

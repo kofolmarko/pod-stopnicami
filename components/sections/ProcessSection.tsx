@@ -1,17 +1,17 @@
-import { Upload, Star, ArrowUpRight } from "lucide-react"
-import ProcessStep from "@/components/process-step"
+import { Upload, Star, ArrowUpRight } from "lucide-react";
+import ProcessStep from "@/components/process-step";
 
 export default function ProcessSection() {
     return (
-        <section id="process" className="py-20 bg-gradient-to-br from-slate-100 to-blue-50">
+        <section id="process" className="py-16 sm:py-20 bg-gradient-to-br from-slate-100 to-blue-50">
             <div className="container mx-auto px-4">
-                <div className="max-w-3xl mx-auto text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">How It Works</h2>
-                    <p className="text-lg text-slate-700">
+                <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4 sm:mb-6">How It Works</h2>
+                    <p className="text-base sm:text-lg text-slate-700">
                         Our streamlined process makes it easy to transform your school spaces.
                     </p>
                 </div>
-                <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
                     <ProcessStep
                         number={1}
                         title="Upload Your Space"
@@ -33,5 +33,5 @@ export default function ProcessSection() {
                 </div>
             </div>
         </section>
-    )
+    );
 }

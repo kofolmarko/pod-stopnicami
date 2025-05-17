@@ -11,6 +11,7 @@ import {
     MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
 import { useState } from "react";
+import { X } from "lucide-react";
 
 export function NavigationMenu() {
     const navItems = [
@@ -36,8 +37,8 @@ export function NavigationMenu() {
                 {/* Desktop Navigation */}
                 <NavBody>
                     <NavbarLogo />
-                    <NavItems items={navItems} />
-                    <div className="flex items-center gap-4">
+                    <NavItems items={navItems} className="hidden md:flex gap-6" />
+                    <div className="hidden md:flex items-center gap-4">
                         <NavbarButton variant="secondary" href="#about">O nas</NavbarButton>
                         <NavbarButton variant="primary" href="#contact">Stopi v stik</NavbarButton>
                     </div>
@@ -56,18 +57,28 @@ export function NavigationMenu() {
                     <MobileNavMenu
                         isOpen={isMobileMenuOpen}
                         onClose={() => setIsMobileMenuOpen(false)}
+                        className="flex flex-col gap-2 p-4"
                     >
+                        <div className="flex justify-end mb-2">
+                            <button
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="text-neutral-300 hover:text-neutral-100 transition-colors duration-200"
+                                aria-label="Close menu"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+                        </div>
                         {navItems.map((item, idx) => (
                             <a
                                 key={`mobile-link-${idx}`}
                                 href={item.link}
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="relative text-neutral-300"
+                                className="relative text-neutral-300 hover:text-neutral-100 transition-colors duration-200"
                             >
-                                <span className="block">{item.name}</span>
+                                <span className="block py-2">{item.name}</span>
                             </a>
                         ))}
-                        <div className="flex w-full flex-col gap-4">
+                        <div className="flex w-full flex-col gap-2 mt-4">
                             <NavbarButton
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 variant="primary"
@@ -88,7 +99,6 @@ export function NavigationMenu() {
                     </MobileNavMenu>
                 </MobileNav>
             </Navbar>
-            {/* Navbar */}
         </div>
     );
 }
